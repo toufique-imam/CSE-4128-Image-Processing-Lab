@@ -18,11 +18,15 @@ def convolve_np_zero(X, F):
     for i in np.arange(H, X_height-H):
         for j in np.arange(W, X_width-W):
             sum = 0
+            idxx = F_height -1
             for k in np.arange(-H, H+1):
+                idxy = F_width - 1
                 for l in np.arange(-W, W+1):
                     a = X[i+k, j+l]
-                    w = F[H+k, W+l]
+                    w = F[idxx, idxy]
+                    idxy=idxy-1
                     sum += (w * a)
+                idxx=idxx-1
             out[i, j] = sum
     return out
 
@@ -35,6 +39,7 @@ def convolve_np_copy(X, F):
 
     H = int((F_height - 1) / 2)
     W = int((F_width - 1) / 2)
+    #out = np.zeros((X_height, X_width))
     out = X.copy()
     for i in np.arange(H, X_height-H):
         for j in np.arange(W, X_width-W):
@@ -45,7 +50,6 @@ def convolve_np_copy(X, F):
                     w = F[H+k, W+l]
                     sum += (w * a)
             out[i, j] = sum
-
     return out
 
 def max_filter(X, F_height, F_width):
@@ -203,3 +207,11 @@ def scharr_col():
     return np.array([[-3, -10, -3],
                      [-10, 0, 10],
                      [3, 10, 3]])
+def shiftMatrixRight(n):
+    out = np.zeros((n,n))
+    out[n//2][n-1]=1
+    return out
+def shiftMatrixLeft(n):
+    out = np.zeros((n,n))
+    out[n//2][0]=1
+    return out
