@@ -4,6 +4,17 @@ import cv2
 import math
 from matplotlib import pyplot as plt
 
+def showImageList(imgList):
+    fig = plt.figure(figsize=(20,20))
+    columns = len(imgList)
+    rows = 1
+    for i in range(len(imgList)):
+        fig.add_subplot(rows,columns,i+1)
+        plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+        plt.imshow(imgList[i], cmap='gray', interpolation='bicubic')
+
+    plt.show()
+
 def convolve_np_zero(X, F):
     X_height = X.shape[0]
     X_width = X.shape[1]
