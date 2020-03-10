@@ -4,7 +4,7 @@ import cv2
 from matplotlib import pyplot as plt
 import image_lib
 from convulation_as_multiplication import convulation_mm as _cm
-from scipy import signal
+
 
 def showimg(img_out):
     plt.imshow(img_out, cmap='gray', interpolation='bicubic')
