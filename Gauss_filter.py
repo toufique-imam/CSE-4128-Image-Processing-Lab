@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 import image_lib
-from convulation_as_multiplication import convulation_mm as _cm
+import convulation_as_multiplication as conmul
 
 def showimg(img_out):
     plt.imshow(img_out, cmap='gray', interpolation='bicubic')
@@ -34,10 +34,10 @@ img_out =image_lib.convolve_np_zero(img, F)/sum
 img_out = image_lib.map_img(img_out,255)
 imgList.append(img_out)
 
-img_out1 = _cm(img,F)/sum
+img_out1 = conmul.convulation_as_matrix_multiplication(img,F)
 imgList.append(img_out1)
 
 img_out2 = signal.convolve2d(img,F,"full")
 imgList.append(img_out2)
-showimg(imgList)
+image_lib.showImageList(imgList)
 # Gauss filter ends

@@ -30,7 +30,6 @@ def create_doublyLinkedMatrix(toeplitz_list,dl_indices):
             start_j = int(j*b_w)
             end_i = int(start_i+b_h)
             end_j = int(start_j+b_w)
-
             dbmatrix[start_i:end_i,start_j:end_j] = toeplitz_list[dl_indices[i,j]-1]
     return dbmatrix
 
@@ -75,18 +74,19 @@ def convulation_as_matrix_multiplication(I,F):
     toeplitz_list = []
     toeplitz_indices=[]
     idxnow = 1
+
     for i in range(F_zero_padded.shape[0]-1,-1,-1):
+        if(idxnow > F.shape[0]+1):
+            toeplitz_indices.append(idxnow-1)
+            continue
         tmp = F_zero_padded[i,:]
         toeplitz_list.append(create_toeplitz(tmp,I.shape[1]))
         toeplitz_indices.append(idxnow)
         idxnow=idxnow+1
-   
     toeplitz_indices = np.array(toeplitz_indices, dtype=np.int)
     dl_indices = create_toeplitz(toeplitz_indices,I.shape[0])
     dl_indices = dl_indices.astype(np.int)
-    # print(dl_indices)
     dlmatrix = create_doublyLinkedMatrix(toeplitz_list,dl_indices)
-    # print(dlmatrix)
     vectored_I = matrix_to_vector(I)
     # print(vectored_I)
     result_vector = np.matmul(dlmatrix,vectored_I)
@@ -144,9 +144,9 @@ def convulation_mm(I,F):
     res = np.reshape(res,(res.shape[0]*res[0].shape[0],res[0].shape[1]))
     return res
 
-
+from scipy import signal
 if __name__ == "__main__":    
-    I = np.array([[1, 2, 3], [4, 5, 6]])
+    I = np.array([[1, 2, 3], [4, 5, 6],[7,8,9]])
     print('I: ', I.shape)
     print(I)
 
@@ -155,4 +155,4 @@ if __name__ == "__main__":
     print('F: ', F.shape)
     print(F)
     res1 = convulation_as_matrix_multiplication(I,F)
-    print(res1)
+    res = signal.convolve2d(I,F)
