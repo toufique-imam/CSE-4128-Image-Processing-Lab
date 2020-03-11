@@ -1,1 +1,1 @@
-# image_processing
+# CSE-4128-Image-Processing-Lab
