@@ -183,11 +183,11 @@ def gauss_weighted_average(n):
     for i in range(n//2):
         out_x.append(val)
         out_y.append([val])
-        val = val << 1
+        val = val * 2
     out_x.append(val)
     out_y.append([val])
     for j in range(n//2):
-        val = val >> 1
+        val = val/2
         out_x.append(val)
         out_y.append([val])
     out_x = [out_x]
